@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('adresses')
-class Adress {
+@Entity('addresses')
+class Address {
     @PrimaryGeneratedColumn('increment')
     id: number
 
@@ -21,4 +21,4 @@ class Adress {
     state: string
 }
 
-export default Adress
+export default Address

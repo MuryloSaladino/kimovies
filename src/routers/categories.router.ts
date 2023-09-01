@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { verifyAdmin, verifyCategoryName, verifyToken } from "../middlewares";
 import { getCategoriesController, getRealEstatesFromCategoryController, postCategoryController } from "../controllers";
+import { validateAdmin, validateToken, verifyCategoryName } from "../middlewares";
+import { Router } from "express";
 
 const categoriesRouter:Router = Router()
 
-categoriesRouter.post('', verifyToken, verifyAdmin, verifyCategoryName, postCategoryController)
+categoriesRouter.post('', validateToken, validateAdmin, verifyCategoryName, postCategoryController)
 categoriesRouter.get('', getCategoriesController)
 categoriesRouter.get('/:id/realEstate', getRealEstatesFromCategoryController)
 

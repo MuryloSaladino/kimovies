@@ -1,4 +1,4 @@
-import { TUserCreation, TUserUpdate } from "./users.interfaces";
+import { TUserCreation, TUserUpdate, TUserResponse } from "./users.interfaces";
 import { TLogin } from "./login.interface";
 import { TCategoryCreation } from "./categories.interfaces";
 import { TAdress } from "./adresses.interfaces";
@@ -12,5 +12,6 @@ export {
     TCategoryCreation,
     TAdress,
     TRealEstateCreation,
-    TScheduleCreation
+    TScheduleCreation,
+    TUserResponse
 }

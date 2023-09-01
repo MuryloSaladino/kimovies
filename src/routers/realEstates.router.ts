@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { verifyAdmin, verifyAdress, verifyToken } from "../middlewares";
 import { getRealEstatesController, postRealEstateController } from "../controllers";
+import { validateAdmin, validateToken, verifyAdress } from "../middlewares";
+import { Router } from "express";
 
 const realEstateRouter:Router = Router()
 
-realEstateRouter.post('', verifyAdress, verifyToken, verifyAdmin, postRealEstateController)
+realEstateRouter.post('', verifyAdress, validateToken, validateAdmin, postRealEstateController)
 realEstateRouter.get('', getRealEstatesController)
 
 

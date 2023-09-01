@@ -10,7 +10,7 @@ export const handleError = (err:Error, req:Request, res:Response, next:NextFunct
     }
 
     if(err instanceof ZodError) {
-        res.status(400).json(err.flatten().fieldErrors)
+        res.status(400).json({ message: err.flatten().fieldErrors })
     }
 
     console.log(err)

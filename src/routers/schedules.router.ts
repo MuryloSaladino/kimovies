@@ -1,12 +1,12 @@
-import { Router } from "express";
-import { validateBody, verifyAdmin, verifySchedule, verifyToken } from "../middlewares";
-import { postScheduleSchemas } from "../schemas";
 import { getSchedulesFromRealEstateController, postScheduleController } from "../controllers/schedules.controllers";
+import { validateAdmin, validateBody, validateToken, verifySchedule } from "../middlewares";
+import { postScheduleSchemas } from "../schemas";
+import { Router } from "express";
 
 const schedulesRouter:Router = Router()
 
-schedulesRouter.post('', verifyToken, verifySchedule, validateBody(postScheduleSchemas), postScheduleController)
-schedulesRouter.get('/realEstate/:id', verifyToken, verifyAdmin, getSchedulesFromRealEstateController)
+schedulesRouter.post('', validateToken, verifySchedule, validateBody(postScheduleSchemas), postScheduleController)
+schedulesRouter.get('/realEstate/:id', validateToken, validateAdmin, getSchedulesFromRealEstateController)
 
 
 export default schedulesRouter
