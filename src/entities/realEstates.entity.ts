@@ -1,6 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AfterLoad, BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import Category from "./categories.entity";
-import Adress from "./adresses.entity";
+import Address from "./adresses.entity";
 
 @Entity('realEstates')
 class RealEstate {
@@ -16,15 +16,15 @@ class RealEstate {
     @Column()
     size: number
 
-    @Column({ type: 'date' })
-    createdAt: string
+    @Column({ type: 'date', nullable: true })
+    createdAt: string | undefined
 
-    @Column({ type: 'date' })
-    updatedAt: string
+    @Column({ type: 'date', nullable: true })
+    updatedAt: string | undefined
 
-    @OneToOne(() => Adress)
+    @OneToOne(() => Address)
     @JoinColumn()
-    adress: Adress
+    address: Address | undefined
 
     @ManyToOne(() => Category, (category) => category.realEstates)
     category: Category
@@ -40,6 +40,11 @@ class RealEstate {
     setUpdate() {
         const date = new Date() 
         this.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    }
+
+    @AfterLoad()
+    responseBody() {
+        this.value = Number(this.value)
     }
 }
 

@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 import { TUserCreation, TUserResponse, TUserUpdate } from "../interfaces";
 import { User } from "../entities";
 import { AppDataSource } from "../data-source";
+import { AppError } from "../errors";
 
 
 export const createUserService = async (payload:TUserCreation) => {
@@ -28,8 +29,30 @@ export const readUsersService = async () => {
 
 export const updateUserService = async (id:number, payload:TUserUpdate) => {
 
+    const userRepo:Repository<User> = AppDataSource.getRepository(User)
+
+    const user:User|null = await userRepo.findOneBy({ id: id })
+
+    if(!user) {
+        throw new AppError("User not found", 404)
+    }
+
+    const updatedUser:User = userRepo.create({ ...user, ...payload })
+
+    await userRepo.save(updatedUser)
+
+    return {...updatedUser, password: undefined}
 }
 
 export const deleteUserService = async (id: number) => {
     
+    const userRepo:Repository<User> = AppDataSource.getRepository(User)
+
+    const user:User|null = await userRepo.findOneBy({ id: id })
+
+    if(!user || user.deletedAt) {
+        throw new AppError("User not found", 404)
+    }
+
+    await userRepo.softDelete(user.id)
 }

@@ -1,10 +1,11 @@
 import { getRealEstatesController, postRealEstateController } from "../controllers";
-import { validateAdmin, validateToken, verifyAdress } from "../middlewares";
+import { validateAdmin, validateBody, validateToken, verifyAdress, verifyCategoryIdForRealEstate } from "../middlewares";
 import { Router } from "express";
+import { postRealEstateSchema } from "../schemas";
 
 const realEstateRouter:Router = Router()
 
-realEstateRouter.post('', verifyAdress, validateToken, validateAdmin, postRealEstateController)
+realEstateRouter.post('', validateToken, validateAdmin, validateBody(postRealEstateSchema), verifyCategoryIdForRealEstate, verifyAdress, postRealEstateController)
 realEstateRouter.get('', getRealEstatesController)
 
 

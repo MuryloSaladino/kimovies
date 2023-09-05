@@ -1,4 +1,4 @@
-import { verifyEmail, verifyPatchAuth, verifyCategoryName, verifyAdress, verifySchedule } from "./verify.middlewares";
+import { verifyEmail, verifyPatchAuth, verifyCategoryName, verifyAdress, verifySchedule, verifyUserId, verifyCategoryId, verifyCategoryIdForRealEstate } from "./verify.middlewares";
 import { validateBody, validateAdmin, validateToken } from "./validate.middlewares";
 import { handleError } from "./handleError.middlewares";
 
@@ -11,5 +11,8 @@ export {
     verifyAdress,
     verifySchedule,
     validateAdmin,
-    validateToken
+    validateToken,
+    verifyUserId,
+    verifyCategoryId,
+    verifyCategoryIdForRealEstate
 }

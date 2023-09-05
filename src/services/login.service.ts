@@ -5,6 +5,7 @@ import { AppDataSource } from "../data-source";
 import { AppError } from "../errors";
 import { compareSync } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import 'dotenv/config';
 
 export const loginService = async (payload:TLogin) => {
 
@@ -16,8 +17,6 @@ export const loginService = async (payload:TLogin) => {
         throw new AppError("Invalid credentials", 401)
     }
 
-    console.log(user.deletedAt)
-
     const compare:boolean = compareSync(payload.password, user.password)
 
     if(!compare) {
@@ -26,7 +25,7 @@ export const loginService = async (payload:TLogin) => {
     
     const token:string = sign(
         {
-            email: user.email, 
+            email: user.email,
             admin: user.admin
         },
         String(process.env.SECRET_KEY),

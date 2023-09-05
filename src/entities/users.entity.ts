@@ -18,10 +18,10 @@ class User {
     @Column({ type: 'varchar', length: 120 })
     password: string
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     createdAt: string
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     updatedAt: string
 
     @DeleteDateColumn({ type: 'date', nullable: true })
@@ -38,6 +38,8 @@ class User {
 
     @BeforeUpdate()
     setUpdate() {
+        this.password = hashSync(this.password)
+
         const date = new Date() 
         this.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
