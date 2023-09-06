@@ -1,5 +1,5 @@
 import { getSchedulesFromRealEstateController, postScheduleController } from "../controllers/schedules.controllers";
-import { validateAdmin, validateBody, validateToken, verifySchedule } from "../middlewares";
+import { validateAdmin, validateBody, validateToken, verifySchedule, verifyUserId } from "../middlewares";
 import { postScheduleSchemas } from "../schemas";
 import { Router } from "express";
 

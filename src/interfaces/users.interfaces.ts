@@ -1,16 +1,19 @@
-import { User } from "../entities";
-
-export type TUserCreation = Pick<User, `name`|`email`|`password`|`admin` >
-
-export type TUserUpdate = Partial<Omit<TUserCreation, 'admin'>>
-
 export type TUserResponse = {
     password: undefined | string;
     id: number;
+    name: string | undefined;
+    email: string | undefined;
+    admin: boolean | undefined;
+    createdAt: string | undefined | null;
+    updatedAt: string | undefined | null;
+    deletedAt?: string | null | undefined;
+}
+
+export type TUserCreation = {
     name: string;
     email: string;
     admin: boolean;
-    createdAt: string | undefined;
-    updatedAt: string | undefined;
-    deletedAt?: string | null | undefined;
+    password: string;
 }
+
+export type TUserUpdate = Partial<TUserCreation>

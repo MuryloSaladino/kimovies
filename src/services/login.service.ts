@@ -17,7 +17,7 @@ export const loginService = async (payload:TLogin) => {
         throw new AppError("Invalid credentials", 401)
     }
 
-    const compare:boolean = compareSync(payload.password, user.password)
+    const compare:boolean = compareSync(payload.password, user.password!)
 
     if(!compare) {
         throw new AppError("Invalid credentials", 401)
@@ -25,7 +25,6 @@ export const loginService = async (payload:TLogin) => {
     
     const token:string = sign(
         {
-            email: user.email,
             admin: user.admin
         },
         String(process.env.SECRET_KEY),
@@ -35,5 +34,5 @@ export const loginService = async (payload:TLogin) => {
         }
     )
 
-    return { token: token }
+    return token
 }

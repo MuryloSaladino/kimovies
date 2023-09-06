@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const postScheduleSchemas = z.object({
-    date: z.string().datetime().length(10),
+    date: z.string(),
     hour: z.string().length(5),
-    realStateId: z.number()
+    realEstateId: z.number()
 })

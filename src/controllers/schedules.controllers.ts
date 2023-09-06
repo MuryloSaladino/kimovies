@@ -3,14 +3,14 @@ import { createScheduleService, readSchedulesFromRealEstateService } from "../se
 
 export const postScheduleController = async (req:Request, res:Response) => {
 
-    const service = await createScheduleService(req.body)
+    await createScheduleService(req.body, Number(res.locals.user.id))
 
-    return res.status(201).json(service)
+    return res.status(201).json({ message: "Schedule created" })
 }
 
 export const getSchedulesFromRealEstateController = async (req:Request, res:Response) => {
 
     const service = await readSchedulesFromRealEstateService(Number(req.params.id))
 
-    return res.status(201).json(service)
+    return res.status(200).json(service)
 }

@@ -20,9 +20,11 @@ export const readUsersService = async () => {
 
     const userRepo:Repository<User> = AppDataSource.getRepository(User)
 
-    const users:TUserResponse[] = (await userRepo.find()).map((user) => {
+    const users:TUserResponse[] = (await userRepo.find()).map((user:User) => {
         return {...user, password: undefined}
     })
+
+    console.log(users)
 
     return users
 }
@@ -37,7 +39,9 @@ export const updateUserService = async (id:number, payload:TUserUpdate) => {
         throw new AppError("User not found", 404)
     }
 
-    const updatedUser:User = userRepo.create({ ...user, ...payload })
+    const updateOptions = { ...payload, admin: user.admin }
+
+    const updatedUser:User = userRepo.create({ ...user, ...updateOptions })
 
     await userRepo.save(updatedUser)
 

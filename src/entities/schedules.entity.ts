@@ -18,6 +18,7 @@ class Schedule {
 
     @ManyToOne(() => RealEstate)
     realEstate: RealEstate
+
 }
 
 export default Schedule

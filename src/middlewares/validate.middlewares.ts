@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express"
 import { AppError } from "../errors"
 import { verify } from "jsonwebtoken"
-import 'dotenv/config';
-import jwtDecode from "jwt-decode";
 import { ZodTypeAny } from "zod";
+import 'dotenv/config';
+import { Repository } from "typeorm";
+import { User } from "../entities";
+import { AppDataSource } from "../data-source";
 
 export const validateBody = (schema:ZodTypeAny) => (req:Request, res:Response, next:NextFunction) => {
 
@@ -31,15 +33,15 @@ export const validateToken = async (req:Request, res:Response, next:NextFunction
             if(err) {
                 throw new AppError(err.message, 401)
             }
+            res.locals.userId = Number(decoded.sub)
+            res.locals.admin = decoded.admin
         }
     )
 
-    const decodedToken:any = jwtDecode(token)
+    const userRepo:Repository<User> = AppDataSource.getRepository(User)
+    const user:User|null = await userRepo.findOneBy({ id: res.locals.userId })
 
-    const { email, admin } = decodedToken
-
-    res.locals.email = email
-    res.locals.admin = admin
+    res.locals.user = user
 
     return next()
 }

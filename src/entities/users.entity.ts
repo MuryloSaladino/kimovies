@@ -7,29 +7,29 @@ class User {
     id: number
 
     @Column({ type: 'varchar', length: 45 })
-    name: string
+    name: string | undefined
 
     @Column({ type: 'varchar', length: 45, unique: true })
-    email: string
+    email: string | undefined
 
     @Column({ default: false })
     admin: boolean
 
     @Column({ type: 'varchar', length: 120 })
-    password: string
+    password: string | undefined
 
     @Column({ type: 'date', nullable: true })
-    createdAt: string
+    createdAt: string | null
 
     @Column({ type: 'date', nullable: true })
-    updatedAt: string
+    updatedAt: string | null
 
     @DeleteDateColumn({ type: 'date', nullable: true })
     deletedAt?: string | null | undefined
 
     @BeforeInsert()
     setAtributes() {
-        this.password = hashSync(this.password)
+        this.password = hashSync(this.password!)
 
         const date = new Date() 
         this.createdAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
@@ -38,7 +38,7 @@ class User {
 
     @BeforeUpdate()
     setUpdate() {
-        this.password = hashSync(this.password)
+        this.password = hashSync(this.password!)
 
         const date = new Date() 
         this.updatedAt = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`

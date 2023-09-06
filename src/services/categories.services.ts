@@ -2,7 +2,6 @@ import { Repository } from "typeorm";
 import { TCategoryCreation } from "../interfaces";
 import { Category, RealEstate } from "../entities";
 import { AppDataSource } from "../data-source";
-import { AppError } from "../errors";
 
 
 export const createCategoryService = async (payload:TCategoryCreation) => {
